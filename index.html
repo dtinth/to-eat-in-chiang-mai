@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>To eat list</title>
+    <style>
+      .data-cell {
+        border-bottom: 1px solid #eee;
+        vertical-align: middle;
+      }
+      .check-box {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        color: green;
+        margin: 0 auto;
+        vertical-align: top;
+      }
+      .text-cell {
+        padding: 10px;
+      }
+      .checkbox-cell {
+        width: 30px;
+        padding-left: 10px;
+        text-align: center;
+      }
+      .finished {
+        color: gray;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; font-family: Arimo, sans-serif;">
+    
+    <h1 style="background: #D86627; margin: 0; padding: 10px; color: white; font-family: Arimo, sans-serif; font-size: 20px; text-align: center;">Things to eat in Chiang Mai</h1>
+
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td class="data-cell checkbox-cell"><span class="check-box"></span></td>
+        <td class="data-cell text-cell">Khao Soy</td>
+      </tr>
+      <tr>
+        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
+        <td class="data-cell text-cell finished">Hotel Breakfast</td>
+      </tr>
+      <tr>
+        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
+        <td class="data-cell text-cell finished">Roti Gu</td>
+      </tr>
+      <tr>
+        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
+        <td class="data-cell text-cell finished">Sai Ua</td>
+      </tr>
+      <tr>
+        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
+        <td class="data-cell text-cell finished">Porridge</td>
+      </tr>
+    </table>
+  </body>
+</html>
