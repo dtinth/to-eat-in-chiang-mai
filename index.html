@@ -53,8 +53,8 @@
             />
           </td>
         </tr>
-        <tr v-for="(food, index) in foodList">
-          <td class="data-cell checkbox-cell" v-on:click="toggle(index)">
+        <tr v-for="food in foodList">
+          <td class="data-cell checkbox-cell" v-on:click="toggle(food)">
             <span class="check-box">
               <span v-if="food.eaten">✔</span>
             </span>
@@ -87,9 +87,10 @@
           newItemTitle: ''
         },
         methods: {
-          toggle: (index) => {
-            // TODO: Make it sync to Firebase
-            // app.foodList[index].eaten = !app.foodList[index].eate
+          toggle: (food) => {
+            foodDatabase.child(food.id).update({
+              eaten: !food.eaten
+            })
           },
           onInputKeyDown: (e) => {
             if (e.which === 13) {
@@ -105,7 +106,13 @@
 
       var convertFromFirebase = (data) => {
         var ids = Object.keys(data).reverse()
-        return ids.map(id => data[id])
+        return ids.map(id => {
+          return {
+            id: id,
+            name: data[id].name,
+            eaten: data[id].eaten
+          }
+        })
       }
 
       var database = firebase.database()
