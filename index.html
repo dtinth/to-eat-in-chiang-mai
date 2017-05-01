@@ -41,7 +41,7 @@
       <div v-if="loading" style="text-align: center; padding: 20px; color: gray">
         Loading
       </div>
-      <table style="width: 100%; border-collapse: collapse;">
+      <table v-if="!loading" style="width: 100%; border-collapse: collapse;">
         <tr>
           <td class="data-cell checkbox-cell"></td>
           <td class="data-cell text-cell">
