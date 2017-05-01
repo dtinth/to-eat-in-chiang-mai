@@ -35,45 +35,86 @@
     </style>
   </head>
   <body style="margin: 0; font-family: Arimo, sans-serif;">
-    
     <h1 style="background: #D86627; margin: 0; padding: 10px; color: white; font-family: Arimo, sans-serif; font-size: 20px; text-align: center;">Things to eat in Chiang Mai</h1>
 
-    <table style="width: 100%; border-collapse: collapse;" id="todo-list">
-      <tr v-for="(food, index) in foodList">
-        <td class="data-cell checkbox-cell" v-on:click="toggle(index)">
-          <span class="check-box">
-            <span v-if="food.eaten">✔</span>
-          </span>
-        </td>
-        <td class="data-cell text-cell">{{ food.name }}</td>
-      </tr>
-    </table>
+    <div id="todo-list">
+      <div v-if="loading" style="text-align: center; padding: 20px; color: gray">
+        Loading
+      </div>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td class="data-cell checkbox-cell"></td>
+          <td class="data-cell text-cell">
+            <input
+              v-model="newItemTitle"
+              v-on:keydown="onInputKeyDown"
+              style="width: 100%; border: 0; font: inherit"
+              placeholder="What do you plan to eat???"
+            />
+          </td>
+        </tr>
+        <tr v-for="(food, index) in foodList">
+          <td class="data-cell checkbox-cell" v-on:click="toggle(index)">
+            <span class="check-box">
+              <span v-if="food.eaten">✔</span>
+            </span>
+          </td>
+          <td class="data-cell text-cell">{{ food.name }}</td>
+        </tr>
+      </table>
+    </div>
 
     <script src="https://unpkg.com/vue"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script>
-      var toEat = new Vue({
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDhjffqbgfqchXUyt0tmYofygVdp5fLy4Y",
+      authDomain: "test-codecamp-ep1.firebaseapp.com",
+      databaseURL: "https://test-codecamp-ep1.firebaseio.com",
+      projectId: "test-codecamp-ep1",
+      storageBucket: "test-codecamp-ep1.appspot.com",
+      messagingSenderId: "827465881158"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script>
+      var app = new Vue({
         el: '#todo-list',
         data: {
-          foodList: [
-            { name: 'Khao Soy', eaten: false },
-            { name: 'Nom Mon', eaten: true },
-            { name: 'Hotel Breakfast', eaten: true }
-          ]
+          loading: true,
+          foodList: [ ],
+          newItemTitle: ''
         },
         methods: {
           toggle: (index) => {
-            toEat.foodList[index].eaten = !toEat.foodList[index].eaten
+            // TODO: Make it sync to Firebase
+            // app.foodList[index].eaten = !app.foodList[index].eate
+          },
+          onInputKeyDown: (e) => {
+            if (e.which === 13) {
+              foodDatabase.push({
+                name: app.newItemTitle,
+                eaten: false
+              })
+              app.newItemTitle = ''
+            }
           }
         }
       })
+
+      var convertFromFirebase = (data) => {
+        var ids = Object.keys(data).reverse()
+        return ids.map(id => data[id])
+      }
+
+      var database = firebase.database()
+      var foodDatabase = database.ref('food')
+      foodDatabase.on('value', (snapshot) => {
+        var foodList = convertFromFirebase(snapshot.val())
+        app.foodList = foodList
+        app.loading = false
+      })
     </script>
-
-
-
-
-
-
-
   </body>
 </html>
