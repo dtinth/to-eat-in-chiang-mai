@@ -11,6 +11,7 @@
       }
       .check-box {
         display: inline-block;
+        cursor: pointer;
         width: 25px;
         height: 25px;
         line-height: 25px;
@@ -37,27 +38,42 @@
     
     <h1 style="background: #D86627; margin: 0; padding: 10px; color: white; font-family: Arimo, sans-serif; font-size: 20px; text-align: center;">Things to eat in Chiang Mai</h1>
 
-    <table style="width: 100%; border-collapse: collapse;">
-      <tr>
-        <td class="data-cell checkbox-cell"><span class="check-box"></span></td>
-        <td class="data-cell text-cell">Khao Soy</td>
-      </tr>
-      <tr>
-        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
-        <td class="data-cell text-cell finished">Hotel Breakfast</td>
-      </tr>
-      <tr>
-        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
-        <td class="data-cell text-cell finished">Roti Gu</td>
-      </tr>
-      <tr>
-        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
-        <td class="data-cell text-cell finished">Sai Ua</td>
-      </tr>
-      <tr>
-        <td class="data-cell checkbox-cell"><span class="check-box">✔</span>︎</td>
-        <td class="data-cell text-cell finished">Porridge</td>
+    <table style="width: 100%; border-collapse: collapse;" id="todo-list">
+      <tr v-for="(food, index) in foodList">
+        <td class="data-cell checkbox-cell" v-on:click="toggle(index)">
+          <span class="check-box">
+            <span v-if="food.eaten">✔</span>
+          </span>
+        </td>
+        <td class="data-cell text-cell">{{ food.name }}</td>
       </tr>
     </table>
+
+    <script src="https://unpkg.com/vue"></script>
+
+    <script>
+      var toEat = new Vue({
+        el: '#todo-list',
+        data: {
+          foodList: [
+            { name: 'Khao Soy', eaten: false },
+            { name: 'Nom Mon', eaten: true },
+            { name: 'Hotel Breakfast', eaten: true }
+          ]
+        },
+        methods: {
+          toggle: (index) => {
+            toEat.foodList[index].eaten = !toEat.foodList[index].eaten
+          }
+        }
+      })
+    </script>
+
+
+
+
+
+
+
   </body>
 </html>
